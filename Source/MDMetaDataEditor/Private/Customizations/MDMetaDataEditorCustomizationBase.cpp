@@ -763,6 +763,19 @@ void FMDMetaDataEditorCustomizationBase::SetMetaDataValue(const FName& Key, cons
 		if (UK2Node_FunctionEntry* FuncNode = FunctionBeingCustomized.Get())
 		{
 			FuncNode->Modify();
+
+//++CK
+			if (Key.IsEqual(TEXT("BlueprintAuthorityOnly")))
+			{
+			    FuncNode->AddExtraFlags(FUNC_BlueprintAuthorityOnly);
+			}
+
+			if (Key.IsEqual(TEXT("BlueprintCosmetic")))
+			{
+			    FuncNode->AddExtraFlags(FUNC_BlueprintCosmetic);
+			}
+//--CK
+
 			MetaData = &(FuncNode->MetaData);
 		}
 		else if (UK2Node_Tunnel* TunnelNode = TunnelBeingCustomized.Get())
@@ -928,6 +941,18 @@ void FMDMetaDataEditorCustomizationBase::RemoveMetaDataKey(const FName& Key, TWe
 
 		if (UK2Node_FunctionEntry* FuncNode = Cast<UK2Node_FunctionEntry>(FunctionBeingCustomized.Get()))
 		{
+//++CK
+			if (Key.IsEqual(TEXT("BlueprintAuthorityOnly")))
+			{
+			    FuncNode->ClearExtraFlags(FUNC_BlueprintAuthorityOnly);
+			}
+
+			if (Key.IsEqual(TEXT("BlueprintCosmetic")))
+			{
+			    FuncNode->ClearExtraFlags(FUNC_BlueprintCosmetic);
+			}
+//--CK
+
 			MetaData = &(FuncNode->MetaData);
 		}
 		else if (UK2Node_Tunnel* TunnelNode = Cast<UK2Node_Tunnel>(TunnelBeingCustomized.Get()))
