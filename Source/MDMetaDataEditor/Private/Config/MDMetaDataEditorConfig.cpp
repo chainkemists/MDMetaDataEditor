@@ -190,7 +190,27 @@ UMDMetaDataEditorConfig::UMDMetaDataEditorConfig()
 
 	// Functions Only
 	MetaDataKeys.Append({
-		FMDMetaDataKey{ TEXT("DefaultToSelf"), EMDMetaDataEditorKeyType::String, TEXT("Specify which function parameter should default to \"self\".") }.SetFunctionsOnly()
+		FMDMetaDataKey{ TEXT("DefaultToSelf"), EMDMetaDataEditorKeyType::String, TEXT("Specify which function parameter should default to \"self\".") }.SetFunctionsOnly(),
+
+//++CK
+		FMDMetaDataKey{ TEXT("BlueprintAuthorityOnly"), EMDMetaDataEditorKeyType::Flag, TEXT("This function will only execute from Blueprint code if running on a machine with network authority (a server, dedicated server, or single-player game).") }
+		.SetFunctionsOnly()
+		.SetSupportedBlueprint(UBlueprint::StaticClass())
+		.SetIncompatibleMetaData(TEXT("BlueprintCosmetic")),
+
+		FMDMetaDataKey{ TEXT("BlueprintCosmetic"), EMDMetaDataEditorKeyType::Flag, TEXT("This function is cosmetic and will not run on dedicated servers.") }
+		.SetFunctionsOnly()
+		.SetSupportedBlueprint(UBlueprint::StaticClass())
+		.SetIncompatibleMetaData(TEXT("BlueprintAuthorityOnly")),
+
+		FMDMetaDataKey{ TEXT("DevelopmentOnly"), EMDMetaDataEditorKeyType::Flag, TEXT("Functions marked as DevelopmentOnly will only run in Development mode. This is useful for functionality like debug output, which is expected not to exist in shipped products.") }
+		.SetFunctionsOnly()
+		.SetSupportedBlueprint(UBlueprint::StaticClass()),
+
+		FMDMetaDataKey{ TEXT("HidePin"), EMDMetaDataEditorKeyType::String, TEXT("") }
+		.SetFunctionsOnly()
+		.SetSupportedBlueprint(UBlueprint::StaticClass())
+//--CK
 	});
 
 	// Objects and PrimaryAssetID
