@@ -905,6 +905,20 @@ void FMDMetaDataEditorFieldView::SetMetadataValue(const FName& Key, const FStrin
 
 	if (FKismetUserDeclaredFunctionMetadata* MetaData = GetFunctionMetadataWithModify())
 	{
+//++CK
+		if (UK2Node_FunctionEntry* FuncNode = MetadataFunctionEntry.Get();
+			Key.IsEqual(TEXT("BlueprintAuthorityOnly")))
+		{
+			FuncNode->AddExtraFlags(FUNC_BlueprintAuthorityOnly);
+		}
+
+		if (UK2Node_FunctionEntry* FuncNode = MetadataFunctionEntry.Get();
+			Key.IsEqual(TEXT("BlueprintCosmetic")))
+		{
+			FuncNode->AddExtraFlags(FUNC_BlueprintCosmetic);
+		}
+//--CK
+
 		MetaData->SetMetaData(Key, FString(Value));
 	}
 
@@ -1018,6 +1032,19 @@ void FMDMetaDataEditorFieldView::RemoveMetadataKey(const FName& Key)
 
 	if (FKismetUserDeclaredFunctionMetadata* MetaData = GetFunctionMetadataWithModify())
 	{
+//++CK
+		if (UK2Node_FunctionEntry* FuncNode = MetadataFunctionEntry.Get();
+			Key.IsEqual(TEXT("BlueprintAuthorityOnly")))
+		{
+			FuncNode->ClearExtraFlags(FUNC_BlueprintAuthorityOnly);
+		}
+
+		if (UK2Node_FunctionEntry* FuncNode = MetadataFunctionEntry.Get();
+			Key.IsEqual(TEXT("BlueprintCosmetic")))
+		{
+			FuncNode->ClearExtraFlags(FUNC_BlueprintCosmetic);
+		}
+//--CK
 		MetaData->RemoveMetaData(Key);
 	}
 
